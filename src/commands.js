@@ -3,9 +3,9 @@
  * and registration.
  */
 
-export const AWW_COMMAND = {
-	name: 'awwww',
-	description: 'Drop some cuteness on this channel.',
+export const QUOTE_COMMAND = {
+	name: 'quote',
+	description: 'Get latest quote for a ticket',
 };
 
 export const INVITE_COMMAND = {
