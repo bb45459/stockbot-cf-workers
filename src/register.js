@@ -1,4 +1,4 @@
-import { QUOTE_COMMAND, INVITE_COMMAND } from './commands.js';
+import { QUOTE_COMMAND, INVITE_COMMAND, STONKS_COMMAND, WEDNESDAY_COMMAND, BEAR_COMMAND, BULL_COMMAND, STONKEY_COMMAND, HONKS_COMMAND, ATT_COMMAND } from './commands.js';
 import dotenv from 'dotenv';
 import process from 'node:process';
 
@@ -34,7 +34,7 @@ const response = await fetch(url, {
 		Authorization: `Bot ${token}`,
 	},
 	method: 'PUT',
-	body: JSON.stringify([QUOTE_COMMAND, INVITE_COMMAND]),
+	body: JSON.stringify([QUOTE_COMMAND, INVITE_COMMAND, STONKS_COMMAND, WEDNESDAY_COMMAND, BEAR_COMMAND, BULL_COMMAND, STONKEY_COMMAND, HONKS_COMMAND, ATT_COMMAND]),
 });
 
 if (response.ok) {

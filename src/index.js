@@ -8,8 +8,9 @@ import {
 	InteractionType,
 	verifyKey,
 } from 'discord-interactions';
-import { QUOTE_COMMAND, INVITE_COMMAND } from './commands.js';
+import { QUOTE_COMMAND, INVITE_COMMAND, STONKS_COMMAND, WEDNESDAY_COMMAND, BEAR_COMMAND, BULL_COMMAND, HONKS_COMMAND, ATT_COMMAND, STONKEY_COMMAND } from './commands.js';
 import { InteractionResponseFlags } from 'discord-interactions';
+import { images } from './images.js';
 
 class JsonResponse extends Response {
 	constructor(body, init) {
@@ -61,7 +62,66 @@ router.post('/', async (request, env) => {
 				return new JsonResponse({
 					type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
 					data: {
-						content: "From Cloudflare with love <3",
+						content: "Quotes coming soon. From Cloudflare with love <3",
+					},
+				});
+			}
+			case STONKS_COMMAND.name.toLowerCase(): {
+				return new JsonResponse({
+					type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+					data: {
+						content: images.stonks
+					},
+				});
+			}
+			case WEDNESDAY_COMMAND.name.toLowerCase(): {
+				const today = new Date();
+				const isWednesday = today.getDay() === 3;
+				return new JsonResponse({
+					type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+					data: {
+						content: isWednesday ? images.wednesday : "It is not Wednesday yet my dudes",
+					},
+				});
+			}
+			case BEAR_COMMAND.name.toLowerCase(): {
+				const randInt = Math.floor(Math.random() * images.bears.length);
+				return new JsonResponse({
+					type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+					data: {
+						content: images.bears[randInt],
+					},
+				});
+			}
+			case BULL_COMMAND.name.toLowerCase(): {
+				return new JsonResponse({
+					type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+					data: {
+						content: "🐂 Bull markets don't exist 🐂",
+					},
+				});
+			}
+			case STONKEY_COMMAND.name.toLowerCase(): {
+				return new JsonResponse({
+					type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+					data: {
+						content: images.stonkey,
+					},
+				});
+			}
+			case HONKS_COMMAND.name.toLowerCase(): {
+				return new JsonResponse({
+					type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+					data: {
+						content: images.honks,
+					},
+				});
+			}
+			case ATT_COMMAND.name.toLowerCase(): {
+				return new JsonResponse({
+					type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+					data: {
+						content: images.death,
 					},
 				});
 			}
