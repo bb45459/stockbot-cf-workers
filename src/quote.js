@@ -11,7 +11,7 @@ export async function getQuoteText(ticker, env) {
 
 	const apiUrl = `https://api.twelvedata.com/quote?symbol=${stockSymbol}&apikey=${env.TWELVE_DATA_TOKEN}`
 	const logoUrl = `https://api.twelvedata.com/logo?symbol=${stockSymbol}&apikey=${env.TWELVE_DATA_TOKEN}`
-	const mktCapUrl = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${stockSymbol}&apikey=${env.ALPHA_VANTAGE_TOKEN}`
+	const mktCapUrl = `https://api.polygon.io/v3/reference/tickers/${stockSymbol.toUpperCase()}?apiKey=${env.POLYGON_TOKEN}`
 
 	const res = await fetch(apiUrl);
 	const logoRes = await fetch(logoUrl);
@@ -21,11 +21,10 @@ export async function getQuoteText(ticker, env) {
 	const logoBody = await logoRes.json();
 	const mktCapBody = await mktCapRes.json();
 
-	// console.log(body);
-	// console.log(logoBody);
-	// console.log(mktCapBody);
+	console.log(body);
+	console.log(logoBody);
+	console.log(mktCapBody);
 
-	// 'YYYY-MM-DDTHH:MM:SSZ'
 	const options = {
 		year: "numeric",
 		month: "numeric",
@@ -37,7 +36,6 @@ export async function getQuoteText(ticker, env) {
 		timeZoneName: "shortGeneric",
 	};
 
-	// const d = (new Date(body.timestamp * 1000)).toString();
 	const d = new Intl.DateTimeFormat("en-US", options).format(new Date(body.timestamp * 1000))
 	const changePercent = body.percent_change ? Number(body.percent_change).toFixed(2) : 'N/A';
 	const changeNum = Number(body.change)
@@ -56,7 +54,7 @@ export async function getQuoteText(ticker, env) {
 	const mktCap = Intl.NumberFormat('en-US', {
 		notation: "compact",
 		maximumFractionDigits: 2
-	}).format(Number(mktCapBody.MarketCapitalization))
+	}).format(Number(mktCapBody.results.market_cap))
 
 	const quoteString =
 		`# ${body.name} - $${body.symbol}\n` +
