@@ -6,6 +6,14 @@
 export const QUOTE_COMMAND = {
 	name: 'quote',
 	description: 'Get latest quote for a ticket',
+	options: [
+		{
+			type: 3, // string
+			name: 'ticker',
+			description: 'stock ticker',
+			required: true,
+		},
+	],
 };
 
 export const INVITE_COMMAND = {

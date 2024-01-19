@@ -11,6 +11,7 @@ import {
 import { QUOTE_COMMAND, INVITE_COMMAND, STONKS_COMMAND, WEDNESDAY_COMMAND, BEAR_COMMAND, BULL_COMMAND, HONKS_COMMAND, ATT_COMMAND, STONKEY_COMMAND } from './commands.js';
 import { InteractionResponseFlags } from 'discord-interactions';
 import { images } from './images.js';
+import { getQuoteText } from './quote.js';
 
 class JsonResponse extends Response {
 	constructor(body, init) {
@@ -59,11 +60,24 @@ router.post('/', async (request, env) => {
 		// Most user commands will come as `APPLICATION_COMMAND`.
 		switch (interaction.data.name.toLowerCase()) {
 			case QUOTE_COMMAND.name.toLowerCase(): {
+				const quoteResponse = await getQuoteText(interaction.data.options[0].value, env);
 				return new JsonResponse({
 					type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
 					data: {
-						content: "Quotes coming soon. From Cloudflare with love <3",
-					},
+						// content: "Quotes coming soon. From Cloudflare with love <3",
+						content: quoteResponse.quote,
+						embeds: [
+							{
+								"type": "image",
+								"url": quoteResponse.logoUrl,
+								"thumbnail": {
+									"url": quoteResponse.logoUrl,
+									"width": 32,
+									"height": 32
+								}
+							}
+						]
+					}
 				});
 			}
 			case STONKS_COMMAND.name.toLowerCase(): {
@@ -143,6 +157,8 @@ router.post('/', async (request, env) => {
 
 	console.error('Unknown Type');
 	return new JsonResponse({ error: 'Unknown Type' }, { status: 400 });
+}).then((res) => {
+	console.log('res', res)
 });
 router.all('*', () => new Response('Not Found.', { status: 404 }));
 
