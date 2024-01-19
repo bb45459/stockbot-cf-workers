@@ -54,7 +54,7 @@ export async function getQuoteText(ticker, env) {
 	const mktCap = Intl.NumberFormat('en-US', {
 		notation: "compact",
 		maximumFractionDigits: 2
-	}).format(Number(mktCapBody.results.market_cap))
+	}).format(Number(mktCapBody?.results?.market_cap))
 
 	const quoteString =
 		`# ${body.name} - $${body.symbol}\n` +

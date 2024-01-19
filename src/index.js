@@ -64,9 +64,8 @@ router.post('/', async (request, env) => {
 				return new JsonResponse({
 					type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
 					data: {
-						// content: "Quotes coming soon. From Cloudflare with love <3",
 						content: quoteResponse.quote,
-						embeds: [
+						embeds: quoteResponse.logoUrl ? [
 							{
 								"type": "image",
 								"url": quoteResponse.logoUrl,
@@ -76,7 +75,7 @@ router.post('/', async (request, env) => {
 									"height": 32
 								}
 							}
-						]
+						] : []
 					}
 				});
 			}
