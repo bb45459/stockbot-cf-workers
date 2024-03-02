@@ -19,7 +19,7 @@ export async function getQuoteText(ticker, env) {
 
 	const body = await res.json();
 	const logoBody = await logoRes.json();
-	const mktCapBody = await mktCapRes.json();
+	const mktCapBody = mktCapRes.status === 200 ? await mktCapRes.json() : null
 
 	console.log(body);
 	console.log(logoBody);
